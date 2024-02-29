@@ -1,8 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { useState } from 'react';
 
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import avatar from '../../assets/user-circle.svg';
+import { AvatarButton } from './AvatarButton';
 import logo from '../../assets/TripSquad-logo.svg';
 import { Button } from '../ui/button';
 
@@ -38,12 +37,7 @@ const Navbar = () => {
           About
         </Link>
         {isLoggedIn ? (
-          <Avatar className='cursor-pointer' onClick={onLogInClick}>
-            <AvatarImage src='https://github.com/shadcn.png' />
-            <AvatarFallback>
-              <img src={avatar} alt='Profile Icon' width={48} height={48} />
-            </AvatarFallback>
-          </Avatar>
+          <AvatarButton logoutFunction={onLogInClick} />
         ) : (
           <Button onClick={onLogInClick}>Log In</Button>
         )}

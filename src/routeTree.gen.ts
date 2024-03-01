@@ -16,12 +16,24 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
+const TripsLazyImport = createFileRoute('/trips')()
+const SupportLazyImport = createFileRoute('/support')()
 const SettingsLazyImport = createFileRoute('/settings')()
 const ProfileLazyImport = createFileRoute('/profile')()
 const AboutLazyImport = createFileRoute('/about')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const TripsLazyRoute = TripsLazyImport.update({
+  path: '/trips',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/trips.lazy').then((d) => d.Route))
+
+const SupportLazyRoute = SupportLazyImport.update({
+  path: '/support',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/support.lazy').then((d) => d.Route))
 
 const SettingsLazyRoute = SettingsLazyImport.update({
   path: '/settings',
@@ -63,6 +75,14 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsLazyImport
       parentRoute: typeof rootRoute
     }
+    '/support': {
+      preLoaderRoute: typeof SupportLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/trips': {
+      preLoaderRoute: typeof TripsLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -73,6 +93,8 @@ export const routeTree = rootRoute.addChildren([
   AboutLazyRoute,
   ProfileLazyRoute,
   SettingsLazyRoute,
+  SupportLazyRoute,
+  TripsLazyRoute,
 ])
 
 /* prettier-ignore-end */

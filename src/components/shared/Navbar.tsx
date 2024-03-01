@@ -1,9 +1,9 @@
 import { Link } from '@tanstack/react-router';
 import { useState } from 'react';
 
-import { AvatarButton } from './AvatarButton';
-import logo from '../../assets/TripSquad-logo.svg';
-import { Button } from '../ui/button';
+import { AvatarButton } from '@/components/shared/AvatarButton';
+import logo from '@/assets/TripSquad-logo.svg';
+import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,15 +27,26 @@ const Navbar = () => {
         </div>
       </Link>
       <div className='flex gap-4 items-center'>
-        <Link
-          to='/about'
-          className='text-lg font-medium transition-colors'
-          inactiveProps={{
-            className: 'text-muted',
-          }}
-        >
-          About
-        </Link>
+        <div className='mr-8 flex gap-6'>
+          <Link
+            to='/support'
+            className='text-md font-medium transition-colors'
+            inactiveProps={{
+              className: 'text-muted',
+            }}
+          >
+            Support
+          </Link>
+          <Link
+            to='/trips'
+            className='text-md font-medium transition-colors'
+            inactiveProps={{
+              className: 'text-muted',
+            }}
+          >
+            Trips
+          </Link>
+        </div>
         {isLoggedIn ? (
           <AvatarButton logoutFunction={onLogInClick} />
         ) : (
